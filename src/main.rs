@@ -77,5 +77,6 @@ fn main() {
     // let question_pool = load_question_pool();
     // let num_questions = quiz::get_num_questions(); // in short the :: denominates the functional approach
     // let typed_questions = questions::check_for_duplicates(&question_pool);
-
+    let result = questions::do_clipbboard_actions();
+    dbg!(&result);
 }

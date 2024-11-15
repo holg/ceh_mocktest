@@ -8,7 +8,7 @@ use_local = []
 use_clipboard = []
 use_ki = []
 use_py = []
-default = ["use_clipboard", "use_ki", "use_local"]
+default = ["use_local"]
 
 
 [dependencies]

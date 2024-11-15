@@ -7126,5 +7126,258 @@
       "Weaponization",
       "Installation"
     ]
+  },
+  {
+    "question": "At what stage of the cyber kill chain theory model does data exfiltration occur?",
+    "answer": "Actions on objectives",
+    "hint": "The final stage where the attacker achieves their goals.",
+    "options": [
+      "Actions on objectives",
+      "Command and control",
+      "Weaponization",
+      "Installation"
+    ]
+  },
+  {
+    "question": "Heather’s company has decided to use a new customer relationship management tool. After performing the appropriate research, they decided to purchase a subscription to a cloud-hosted solution. The only administrative task that Heather will need to perform is the management of user accounts. The provider will take care of the hardware, operating system, and software administration including patching and monitoring.  Which of the following is this type of solution?",
+    "answer": "Saas",
+    "hint": "SaaS handles all aspects including software and hardware administration",
+    "options": [
+      "Paas",
+      "Saas",
+      "Iaas",
+      "Caas"
+    ]
+  },
+  {
+    "question": "Heather’s company has decided to use a new customer relationship management tool. After performing the appropriate research, they decided to purchase a subscription to a cloud-hosted solution. The only administrative task that Heather will need to perform is the management of user accounts. The provider will take care of the hardware, operating system, and software administration including patching and monitoring.  Which of the following is this type of solution?",
+    "answer": "Saas",
+    "hint": "Cloud-hosted CRM with managed software and hardware indicates SaaS",
+    "options": [
+      "Paas",
+      "Saas",
+      "Iaas",
+      "Caas"
+    ]
+  },
+  {
+    "question": "By performing a penetration test, you gained access under a user account. During the test, you established a connection with your own machine via the SMB service and occasionally entered your login and password in plaintext.  Which file do you have to clean to clear the password?",
+    "answer": ".bash_history",
+    "hint": ".bash_history logs your command line history.",
+    "options": [
+      ".bash_history",
+      ".profile",
+      ".bashrc",
+      ".xsession-log"
+    ]
+  },
+  {
+    "question": "Infecting a system with malware and using phishing to gain credentials to a system or web application are examples of which phase of the ethical hacking methodology?",
+    "answer": "Gaining access",
+    "hint": "This is when you actively exploit vulnerabilities.",
+    "options": [
+      "Gaining access",
+      "Maintaining access",
+      "Reconnaissance",
+      "Scanning"
+    ]
+  },
+  {
+    "question": "John is investigating web-application firewall logs and observers that someone is attempting to inject the following:  char buff[10]; buff [10] = 'a'  What type of attack is this? ",
+    "answer": "buffer overflow",
+    "hint": "The code attempts to write beyond the allocated array size.",
+    "options": [
+      "SQL injection",
+      "XSS",
+      "CERF",
+      "buffer overflow"
+    ]
+  },
+  {
+    "question": "Mr. Omkar performed tool-based vulnerability assessment and found two vulnerabilities. During analysis, he found that these issues are not true vulnerabilities.  What will you call these issues?",
+    "answer": "False positives",
+    "hint": "Issues identified by the tool but are not actual vulnerabilities",
+    "options": [
+      "True positive",
+      "False negatives",
+      "True negative",
+      "False positives"
+    ]
+  },
+  {
+    "question": "What is the common name for a vulnerability disclosure program opened by companies in platforms such as HackerOne?",
+    "answer": "Bug bounty program",
+    "hint": "Look for the term commonly used on platforms like HackerOne.",
+    "options": [
+      "Ethical hacking program",
+      "White-hat hacking program",
+      "Bug bounty program",
+      "Vulnerability hunting program"
+    ]
+  },
+  {
+    "question": "There are multiple cloud deployment options depending on how isolated a customer’s resources are from those of other customers. Shared environments share the costs and allow each customer to enjoy lower operations expenses. One solution is for a customer to join with a group of users or organizations to share a cloud environment.  What is this cloud deployment option called?",
+    "answer": "Community",
+    "hint": "It involves sharing with specific groups or organizations.",
+    "options": [
+      "Private",
+      "Public",
+      "Community",
+      "Hybrid"
+    ]
+  },
+  {
+    "question": "Andrew is an Ethical Hacker who was assigned the task of discovering all the active devices hidden by a restrictive firewall in the IPv4 range in a given target network.  Which of the following host discovery techniques must he use to perform the given task?",
+    "answer": "ARP ping scan",
+    "hint": "Useful for discovering hosts on a local network",
+    "options": [
+      "UDP scan",
+      "ACK flag probe scan",
+      "ARP ping scan",
+      "TCP Maimon scan"
+    ]
+  },
+  {
+    "question": "An organization has automated the operation of critical infrastructure from a remote location. For this purpose, all the industrial control systems are connected to the Internet. To empower the manufacturing process, ensure the reliability of industrial networks, and reduce downtime and service disruption, the organization decided to install an OT security tool that further protects against security incidents such as cyber espionage, zero-day attacks, and malware.  Which of the following tools must the organization employ to protect its critical infrastructure?",
+    "answer": "Flowmon",
+    "hint": "This tool specializes in network monitoring and security for industrial control systems.",
+    "options": [
+      "BalenaCloud",
+      "Flowmon",
+      "Robotium",
+      "IntentFuzzer"
+    ]
+  },
+  {
+    "question": "Ralph, a professional hacker, targeted Jane, who had recently bought new systems for her company. After a few days, Ralph contacted Jane while masquerading as a legitimate customer support executive, informing that her systems need to be serviced for proper functioning and that customer support will send a computer technician. Jane promptly replied positively. Ralph entered Jane’s company using this opportunity and gathered sensitive information by scanning terminals for passwords, searching for important documents in desks, and rummaging bins.  What is the type of attack technique Ralph used on Jane?",
+    "answer": "Impersonation",
+    "hint": "Ralph pretended to be a customer support executive",
+    "options": [
+      "Eavesdropping",
+      "Dumpster diving",
+      "Shoulder surfing",
+      "Impersonation"
+    ]
+  },
+  {
+    "question": "Bella, a security professional working at an IT firm, finds that a security breach has occurred while transferring important files. Sensitive data, employee usernames, and passwords are shared in plaintext, paving the way for hackers to perform successful session hijacking. To address this situation, Bella implemented a protocol that sends data using encryption and digital certificates.  Which of the following protocols is used by Bella?",
+    "answer": "FTPS",
+    "hint": "This protocol uses encryption and digital certificates., ollama error HTTPS",
+    "options": [
+      "HTTPS",
+      "IP",
+      "FTP",
+      "FTPS"
+    ]
+  },
+  {
+    "question": "Security administrator John Smith has noticed abnormal amounts of traffic coming from local computers at night. Upon reviewing, he finds that user data have been exfiltrated by an attacker. AV tools are unable to find any malicious software, and the IDS/IPS has not reported on any non-whitelisted programs.  What type of malware did the attacker use to bypass the company’s application whitelisting?",
+    "answer": "File-less malware",
+    "hint": "This type of malware leverages legitimate system tools to carry out its activities.",
+    "options": [
+      "Zero-day malware",
+      "File-less malware",
+      "Phishing malware",
+      "Logic bomb malware"
+    ]
+  },
+  {
+    "question": "Kevin, a professional hacker, wants to penetrate CyberTech Inc’s network. He employed a technique, using which he encoded packets with Unicode characters. The company’s IDS cannot recognize the packets, but the target web server can decode them.  What is the technique used by Kevin to evade the IDS system?",
+    "answer": "Obfuscating",
+    "hint": "This technique involves making data difficult to understand or interpret.",
+    "options": [
+      "Obfuscating",
+      "Session splicing",
+      "Urgency flag",
+      "Desynchronization"
+    ]
+  },
+  {
+    "question": "To invisibly maintain access to a machine, an attacker utilizes a rootkit that sits undetected in the core components of the operating system. What is this type of rootkit an example of?",
+    "answer": "Kernel rootkit",
+    "hint": "This rootkit type operates within the core components of the operating system.",
+    "options": [
+      "Hypervisor rootkit",
+      "Kernel rootkit",
+      "Hardware rootkit",
+      "Firmware rootkit"
+    ]
+  },
+  {
+    "question": "Which of the following information security controls creates an appealing isolated environment for hackers to prevent them from compromising critical targets while simultaneously gathering information about the hacker?",
+    "answer": "Honeypot",
+    "hint": "This is a decoy to attract attackers.",
+    "options": [
+      "Honeypot",
+      "Firewall",
+      "Botnet",
+      "Intrusion detection system"
+    ]
+  },
+  {
+    "question": "Jim, a professional hacker, targeted an organization that is operating critical industrial infrastructure. Jim used Nmap to scan open ports and running services on systems connected to the organization’s OT network. He used an Nmap command to identify Ethernet/IP devices connected to the Internet and further gathered information such as the vendor name, product code and name, device name, and IP address.  Which of the following Nmap commands helped Jim retrieve the required information?",
+    "answer": "nmap -Pn -sU -p 44818 --script enip-info < Target IP >",
+    "hint": "--script enip-info is used to gather information from Ethernet/IP devices",
+    "options": [
+      "nmap -Pn -sT -p 46824 < Target IP >",
+      "nmap -Pn -sT --scan-delay 1s --max-parallelism 1 -p < Port List > < Target IP >",
+      "nmap -Pn -sU -p 44818 --script enip-info < Target IP >",
+      "nmap -Pn -sT -p 102 --script s7-info < Target IP >"
+    ]
+  },
+  {
+    "question": "In this form of encryption algorithm, every individual block contains 64-bit data, and three keys are used, where each key consists of 56 bits. Which is this encryption algorithm?",
+    "answer": "Triple DES",
+    "hint": "This algorithm uses three keys and a block size of 64 bits",
+    "options": [
+      "MD5 encryption algorithm",
+      "Triple DES",
+      "AES",
+      "IDEA"
+    ]
+  },
+  {
+    "question": "Sam is a penetration tester hired by Inception Tech, a security organization. He was asked to perform port scanning on a target host in the network. While performing the given task, Sam sends FIN/ACK probes and determines that an RST packet is sent in response by the target host, indicating that the port is closed.  What is the port scanning technique used by Sam to discover open ports?",
+    "answer": "TCP Maimon scan\"",
+    "hint": "The response of an RST packet indicates that the ACK Flag Probe Scan is being used. Ollama wrong ACK flag probe scan",
+    "options": [
+      "Xmas scan",
+      "IDLE/IPID header scan",
+      "ACK flag probe scan",
+      "TCP Maimon scan"
+    ]
+  },
+  {
+    "question": "Gerard, a disgruntled ex-employee of Sunglass IT Solutions, targets this organization to perform sophisticated attacks and bring down its reputation in the market. To launch the attacks process, he performed DNS footprinting to gather information about DNS servers and to identify the hosts connected in the target network. He used an automated tool that can retrieve information about DNS zone data including DNS domain names, computer names, IP addresses, DNS records, and network Whois records. He further exploited this information to launch other sophisticated attacks.  What is the tool employed by Gerard in the above scenario?",
+    "answer": "Bluto",
+    "hint": "Automated mobile penetration testing and network scanning tool ollama wrong zANTI",
+    "options": [
+      "zANTI",
+      "Knative",
+      "Towelroot",
+      "Bluto"
+    ]
+  },
+  {
+    "question": "Steven connected his iPhone to a public computer that had been infected by Clark, an attacker. After establishing the connection with the public computer, Steven enabled iTunes Wi-Fi sync on the computer so that the device could continue communication with that computer even after being physically disconnected. Now, Clark gains access to Steven’s iPhone through the infected computer and is able to monitor and read all of Steven’s activity on the iPhone, even after the device is out of the communication zone.  Which of the following attacks is performed by Clark in the above scenario?",
+    "answer": "iOS trustjacking",
+    "hint": "Attack involves unauthorized access through trusted device",
+    "options": [
+      "iOS trustjacking",
+      "Man-in-the-disk attack",
+      "Exploiting SS7 vulnerability",
+      "iOS jailbreaking"
+    ]
+  },
+  {
+    "question": "John, a professional hacker, decided to use DNS to perform data exfiltration on a target network. In this process, he embedded malicious data into the DNS protocol packets that even DNSSEC cannot detect. Using this technique, John successfully injected malware to bypass a firewall and maintained communication with the victim machine and C&C server.  What is the technique employed by John to bypass the firewall?",
+    "answer": "DNS tunneling method",
+    "hint": "John used DNS protocol packets to inject malware and maintain communication.",
+    "options": [
+      "DNSSEC zone walking",
+      "DNS enumeration",
+      "DNS cache snooping",
+      "DNS tunneling method"
+    ]
   }
 ]

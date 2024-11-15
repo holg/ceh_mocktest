@@ -1,7 +1,5 @@
 //helper/ollama.rs
-// Import the USE_LOCAL constant from main module
 #![allow(unused_imports, dead_code)]
-
 use anyhow::Result;
 use serde_json;
 use serde_json::json;

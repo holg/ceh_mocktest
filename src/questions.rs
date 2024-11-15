@@ -219,7 +219,7 @@ pub fn get_question_from_clipboard() -> anyhow::Result<Question> {
 }
 
 #[cfg(not(feature = "use_clipboard"))]
-pub fn get_question_from_clipboard() -> anyhow::Result<Question> {Question::new()}
+pub fn get_question_from_clipboard() -> anyhow::Result<Question> {Ok(Question::new())}
 
 
 #[cfg(feature = "use_ki")]
@@ -371,6 +371,11 @@ pub fn do_clipbboard_actions() -> anyhow::Result<Question> {
             return Err(e);
         }
     };
+    let found_question = check_question_exists(&clipboard_question);
+    if found_question.is_some() {
+        println!("Question already exists in the pool.");
+        return Ok(found_question.unwrap());
+    }
     let filled_question = do_clipboard_question(clipboard_question.clone())?;
     if &clipboard_question == &filled_question {
         println!("Question filled by Ollama:");
@@ -387,7 +392,7 @@ fn get_clipboard_question() -> anyhow::Result<Question> {
 }
 #[cfg(not(feature = "use_clipboard"))]
 fn get_clipboard_question() -> anyhow::Result<Question> {
-    questions::Question::new()
+    Ok(questions::Question::new())
 }
 #[cfg(feature = "use_ki")]
 fn do_clipboard_question(clip_question:Question) -> anyhow::Result<Question> {
@@ -397,7 +402,13 @@ fn do_clipboard_question(clip_question:Question) -> anyhow::Result<Question> {
         Err(_) => Ok(clip_question)
     }
 }
+
+fn check_question_exists(question: &Question) -> Option<Question> {
+    let questions = load_question_pool();
+    questions.into_iter().find(|q| q.question == question.question)
+}
+
 #[cfg(not(feature = "use_ki"))]
 fn do_clipboard_question(clip_question:Question) -> anyhow::Result<Question> {
-    Ok(clip_question?)
+    Ok(clip_question)
 }
