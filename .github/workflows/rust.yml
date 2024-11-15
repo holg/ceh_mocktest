@@ -20,10 +20,8 @@ jobs:
       run: sudo apt-get update && sudo apt-get install -y libxcb-shape0-dev libxcb-xfixes0-dev
     - name: Build
       run: cargo build --release
-    - name: Run
-      run: cargo run --release
     - name: Run tests
-      run: cargo test --release
+      run: cargo test --release --features "test"
 
   build-windows:
     runs-on: windows-latest
@@ -33,8 +31,6 @@ jobs:
       run: rustup default stable
     - name: Build
       run: cargo build --release
-    - name: Run
-      run: cargo run --release
     - name: Run tests
       run: cargo test --release
 
@@ -49,7 +45,5 @@ jobs:
       run: rustup default stable
     - name: Build
       run: cargo build --release --target ${{ matrix.arch }}
-    - name: Run
-      run: cargo run --release --target ${{ matrix.arch }}
     - name: Run tests
       run: cargo test --release --target ${{ matrix.arch }}
