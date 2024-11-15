@@ -17,7 +17,7 @@ use super::helper::{banner}; // we are one deeper than the helper module, as exe
 use rand::prelude::{IndexedRandom}; //, SliceRandom};
 use clipboard::{ClipboardContext, ClipboardProvider};
 use anyhow;
-use crate::helper;
+use crate::{helper, questions};
 #[cfg(feature = "use_ki")]
 use super::ollama;
 
@@ -195,7 +195,7 @@ pub fn ask_question(question_number: usize, typed_question: &TypedQuestion) -> b
     }
 }
 
-pub fn add_question_to_json(new_question: Question) -> Result<(), Box<dyn std::error::Error>> {
+pub fn add_question_to_json(new_question: Question) -> anyhow::Result<()> {
     // Read existing questions
     let mut questions = load_question_pool();
 
@@ -210,12 +210,17 @@ pub fn add_question_to_json(new_question: Question) -> Result<(), Box<dyn std::e
     println!("Question added successfully!");
     Ok(())
 }
+#[cfg(feature = "use_clipboard")]
 pub fn get_question_from_clipboard() -> anyhow::Result<Question> {
     // Retrieve text content from clipboard
     let mut ctx: ClipboardContext = ClipboardProvider::new().expect("Error creating clipboard context");
     let clipboard_content = ctx.get_contents().expect("Error getting clipboard content");
     Ok(create_question_from_text(&clipboard_content)?)
 }
+
+#[cfg(not(feature = "use_clipboard"))]
+pub fn get_question_from_clipboard() -> anyhow::Result<Question> {Question::new()}
+
 
 #[cfg(feature = "use_ki")]
 pub fn fill_question_from_ollama(mut question: Question) -> anyhow::Result<Question> {
@@ -350,4 +355,49 @@ pub fn create_question_from_text(text: &str) -> anyhow::Result<Question> {
         hint: None,
         options,
     })
+}
+
+
+
+
+
+// TODO refactor
+
+pub fn do_clipbboard_actions() -> anyhow::Result<Question> {
+    let clipboard_question = match get_clipboard_question() {
+        Ok(question) => question,
+        Err(e) => {
+            eprintln!("Error getting question from clipboard: {}", e);
+            return Err(e);
+        }
+    };
+    let filled_question = do_clipboard_question(clipboard_question.clone())?;
+    if &clipboard_question == &filled_question {
+        println!("Question filled by Ollama:");
+        println!("{:#?}", filled_question);
+    }else {
+        add_question_to_json(filled_question.clone())?;
+    }
+    Ok(filled_question)
+}
+
+#[cfg(feature = "use_clipboard")]
+fn get_clipboard_question() -> anyhow::Result<Question> {
+    questions::get_question_from_clipboard()
+}
+#[cfg(not(feature = "use_clipboard"))]
+fn get_clipboard_question() -> anyhow::Result<Question> {
+    questions::Question::new()
+}
+#[cfg(feature = "use_ki")]
+fn do_clipboard_question(clip_question:Question) -> anyhow::Result<Question> {
+    // If Question is created from the clipboard, we ask Ollama about it
+    match questions::fill_question_from_ollama(clip_question.clone()) {
+        Ok(filled_question) => Ok(filled_question),
+        Err(_) => Ok(clip_question)
+    }
+}
+#[cfg(not(feature = "use_ki"))]
+fn do_clipboard_question(clip_question:Question) -> anyhow::Result<Question> {
+    Ok(clip_question?)
 }

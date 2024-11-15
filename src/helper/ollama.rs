@@ -48,7 +48,7 @@ pub fn ask_ollama_model(
     temperature: Option<f32>,
     repeat_penalty: Option<f32>,top_k: Option<u32>, top_p: Option<f32>,
     num_predict: Option<u32>, stop: Option<&str>
-) -> Result<GenerationResponse, anyhow::Error> {
+) -> anyhow::Result<GenerationResponse> {
     let ollama = Ollama::default();
     let options: GenerationOptions =
         serde_json::from_str(&ollama_get_options_str_from_param(

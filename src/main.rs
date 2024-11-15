@@ -14,18 +14,10 @@ use crate::questions::Question;
 
 // use quiz::{TypedQuestion};
 // no internet load from local questions.json
-#[cfg(not(feature = "use_local"))]
-pub const USE_LOCAL: bool = false;
-#[cfg(feature = "use_local")]
-pub const USE_LOCAL: bool = true;
-#[cfg(not(feature = "use_ki"))]
-pub const USE_KI: bool = false;
-#[cfg(feature = "use_ki")]
-pub const USE_KI: bool = true;
 
 #[cfg(feature = "use_ki")]
 fn test_ask_ollama() -> Result<GenerationResponse, Box<dyn std::error::Error>> {
-    if USE_KI {
+    if helper::is_use_ki() {
         let ollama_result = ollama::ask_ollama_model(
             "mistral".to_string(), "Why is the sky blue?".to_string(), None, None, None, None, None, None);
         Ok(ollama_result?)
@@ -77,6 +69,7 @@ async fn tokia_main() -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }
 
+
 fn main() {
     // test_components();
     // htr_low_level_http::check_internet_connection();
@@ -85,67 +78,4 @@ fn main() {
     // let num_questions = quiz::get_num_questions(); // in short the :: denominates the functional approach
     // let typed_questions = questions::check_for_duplicates(&question_pool);
 
-    #[cfg(feature = "use_ki")]
-    if helper::is_use_ki(){
-        let _ = test_ask_ollama();
-    }
-    let clip_question = questions::get_question_from_clipboard();
-    match clip_question {
-        #[cfg(feature = "use_ki")]
-        Ok(question) => {
-            // check if we already have this question in the json
-            let found_question=  questions::get_filled_question(&question);
-            if found_question.is_ok(){
-                eprintln!("Question already in json");
-                dbg!(&found_question);
-                return;
-            }
-            // if Question is created from clipboard, we ask ollama about it
-            let ollama_question = questions::fill_question_from_ollama(question);
-            let mut i = 0;
-            match ollama_question{
-                Ok(question) => {
-                    // if ollama filled in the gaps in clip_question, we add the question to the json
-                    questions::add_question_to_json(question.clone()).expect("Error adding question to json");
-                    i += 1;
-                    questions::ask_question(i, &TypedQuestion { qtype: QuestionType::DefaultItem, question });
-                },
-                Err(e) => {
-                    eprintln!("Error getting question from ollama: {}", e);
-                }
-            }
-
-        },
-        Err(e) => {
-            eprintln!("Error getting question from clipboard: {}", e);
-        }
-        #[cfg(not(feature = "use_ki"))]
-        Ok(question) => {
-            // check if we already have this question in the json
-            let found_question=  questions::get_filled_question(&question);
-            if found_question.is_ok(){
-                eprintln!("Question already in json");
-                dbg!(&found_question);
-                return;
-            }
-            // if Question is created from clipboard, we ask ollama about it
-            let ollama_question = questions::fill_question_from_ollama(question);
-            let mut i = 0;
-            match ollama_question{
-                Ok(question) => {
-                    // if ollama filled in the gaps in clip_question, we add the question to the json
-                    questions::add_question_to_json(question.clone()).expect("Error adding question to json");
-                    i += 1;
-                    questions::ask_question(i, &TypedQuestion { qtype: QuestionType::DefaultItem, question });
-                },
-                Err(e) => {
-                    eprintln!("Error getting question from ollama: {}", e);
-                }
-            }
-
-        },
-        Err(e) => {
-            eprintln!("Error getting question from clipboard: {}", e);
-        }
-    };
 }

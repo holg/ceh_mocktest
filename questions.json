@@ -7049,5 +7049,82 @@
       "Service-based solutions",
       "Inference-based assessment"
     ]
+  },
+  {
+    "question": "There are multiple cloud deployment options depending on how isolated a customer’s resources are from those of other customers. Shared environments share the costs and allow each customer to enjoy lower operations expenses. One solution is for a customer to join with a group of users or organizations to share a cloud environment. What is this cloud deployment option called?",
+    "answer": "Community",
+    "hint": "This option involves sharing resources among specific groups.",
+    "options": [
+      "Public",
+      "Private",
+      "Hybrid",
+      "Community"
+    ]
+  },
+  {
+    "question": "Alice, a professional hacker, targeted an organization’s cloud services. She infiltrated the target’s MSP provider by sending spear-phishing emails and distributed custom-made malware to compromise user accounts and gain remote access to the cloud service. Further, she accessed the target customer profiles with her MSP account, compressed the customer data, and stored them in the MSP. Then, she used this information to launch further attacks on the target organization. Which of the following cloud attacks did Alice perform in the above scenario?",
+    "answer": "Cloud hopper attack",
+    "hint": "Alice infiltrated the MSP provider to gain access",
+    "options": [
+      "Cloud cryptojacking",
+      "Man-in-the-cloud (MITC) attack",
+      "Cloud hopper attack",
+      "Cloudborne attack"
+    ]
+  },
+  {
+    "question": "Eric, a cloud security engineer, implements a technique for securing the cloud resources used by his organization. This technique assumes by default that a user attempting to access the network is not an authentic entity and verifies every incoming connection before allowing access to the network. Using this technique, he also imposed conditions such that employees can access only the resources required for their role. What is the technique employed by Eric to secure cloud resources?",
+    "answer": "Zero trust network",
+    "hint": "Security model that assumes breach and verifies each request.",
+    "options": [
+      "Zero trust network",
+      "Container technology",
+      "Demilitarized zone",
+      "Serverless computing"
+    ]
+  },
+  {
+    "question": "Abel, a cloud architect, uses container technology to deploy applications/software including all its dependencies, such as libraries and configuration files, binaries, and other resources that run independently from other processes in the cloud environment. For the containerization of applications, he follows the five-tier container technology architecture. Currently, Abel is verifying and validating image contents, signing images, and sending them to the registries. Which of the following tiers of the container technology architecture is Abel currently working in?",
+    "answer": "Tier-2: Testing and accreditation systems",
+    "hint": "Abel is verifying and validating image contents.",
+    "options": [
+      "Tier-3: Registries",
+      "Tier-1: Developer machines",
+      "Tier-2: Testing and accreditation systems",
+      "Tier-4: Orchestrators"
+    ]
+  },
+  {
+    "question": "Heather’s company has decided to use a new customer relationship management tool. After performing the appropriate research, they decided to purchase a subscription to a cloud-hosted solution. The only administrative task that Heather will need to perform is the management of user accounts. The provider will take care of the hardware, operating system, and software administration including patching and monitoring. Which of the following is this type of solution?",
+    "answer": "SaaS",
+    "hint": "Software as a Service (SaaS) involves the provider managing hardware and software.",
+    "options": [
+      "PaaS",
+      "IaaS",
+      "SaaS",
+      "CaaS"
+    ]
+  },
+  {
+    "question": "Harald is sending a digitally signed email to Poly. With which key is Harald signing this message and how is Poly validating it?",
+    "answer": "Harald is signing the message with his private key, and Poly will verify that the message came from Harald  by using Harald ’s public key.",
+    "hint": "Digital signatures use sender's private key for signing.",
+    "options": [
+      "Harald is signing the message with his public key, and Poly will verify that the message came from Harald by using Harald ’s private key.",
+      "Harald  is signing the message with Poly’s public key, and Poly will verify that the message came from Harald by using Harald ’s public key.",
+      "Harald  is signing the message with Poly’s private key, and Poly will verify that the message came from Harald by using Harald ’s public key.",
+      "Harald is signing the message with his private key, and Poly will verify that the message came from Harald  by using Harald ’s public key."
+    ]
+  },
+  {
+    "question": "At what stage of the cyber kill chain theory model does data exfiltration occur?",
+    "answer": "Actions on objectives",
+    "hint": "This stage involves the adversary achieving their goals.",
+    "options": [
+      "Actions on objectives",
+      "Command and control",
+      "Weaponization",
+      "Installation"
+    ]
   }
 ]
