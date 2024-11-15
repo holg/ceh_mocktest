@@ -17,9 +17,7 @@ use super::helper::{banner}; // we are one deeper than the helper module, as exe
 use rand::prelude::{IndexedRandom}; //, SliceRandom};
 use clipboard::{ClipboardContext, ClipboardProvider};
 use anyhow;
-use super::{USE_LOCAL, USE_KI};
-#[cfg(not(feature = "use_ki"))]
-pub const USE_KI: bool = false;
+use crate::helper;
 #[cfg(feature = "use_ki")]
 use super::ollama;
 
@@ -69,7 +67,7 @@ impl TypedQuestion {
 }
 
 pub fn load_question_pool() -> Vec<Question> {
-    if USE_LOCAL {
+    if helper::is_use_local() {
         let data = match fs::read_to_string("questions.json") {
             Ok(content) => content,
             Err(_) => {
@@ -219,6 +217,7 @@ pub fn get_question_from_clipboard() -> anyhow::Result<Question> {
     Ok(create_question_from_text(&clipboard_content)?)
 }
 
+#[cfg(feature = "use_ki")]
 pub fn fill_question_from_ollama(mut question: Question) -> anyhow::Result<Question> {
     // Retrieve text content from clipboard
     dbg!(&question);

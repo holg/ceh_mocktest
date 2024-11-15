@@ -41,3 +41,28 @@ pub fn banner() {
     "#;
     println!("{}", art);
 }
+
+/// Returns true if the "use_local" feature is enabled, otherwise false.
+pub fn is_use_local() -> bool {
+    cfg!(feature = "use_local")
+}
+
+/// Returns true if the "use_ki" feature is enabled, otherwise false.
+pub fn is_use_ki() -> bool {
+    cfg!(feature = "use_ki")
+}
+/// Returns true if the "use_clipboard" feature is enabled, otherwise false.
+pub fn is_use_clipboard() -> bool {
+    cfg!(feature = "use_clipboard")
+}
+
+/// Returns true if the "use_py" feature is enabled, otherwise false.
+pub fn is_use_py() -> bool {
+    cfg!(feature = "use_py")
+}
+
+/// Returns true if the "use_py" feature is enabled, otherwise false.
+pub fn debug_default_level() -> u32 {
+    10
+}
+
