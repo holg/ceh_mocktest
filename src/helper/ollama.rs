@@ -103,7 +103,7 @@ mod tests {
         let model = String::from("mistral");
         let prompt = String::from("Some prompt text");
         let options_str = String::from("{}"); // Assuming an empty JSON object for options
-        let result = ask_ollama_model(model, prompt, options_str);
+        let result = ask_ollama_model(model, prompt,None, None, None, None, None, None);
         assert!(result.is_ok());
     }
     #[test]
