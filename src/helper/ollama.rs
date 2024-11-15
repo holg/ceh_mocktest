@@ -8,7 +8,8 @@ use serde_json::json;
 use tokio; // Make sure to add `tokio` in your dependencies in Cargo.toml
 #[cfg(feature = "use_ki")]
 mod use_ki {
-    use ollama_rs::generation::completion::GenerationResponse;
+    use ollama_rs;
+    pub use ollama_rs::generation::completion::GenerationResponse;
     pub use ollama_rs::{
         generation::{completion::request::GenerationRequest, options::GenerationOptions},
         Ollama,
