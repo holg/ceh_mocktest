@@ -1,12 +1,33 @@
 #![allow(unused_imports)]
-use std::fs;
-use std::io::{self, Read, Write};
-use std::process;
-use std::thread::sleep;
-use std::time::Duration;
-use std::net::{TcpStream, ToSocketAddrs};
-use url;
-fn http_request(url: &str, method: &str, include_body: bool, timeout: Option<Duration>) -> Result<HttpResponse, Box<dyn std::error::Error>> {
+
+pub(crate) use std::collections::HashMap;
+pub(crate) use std::fs;
+pub(crate) use std::io::{self, Read, Write};
+pub(crate) use std::process;
+pub(crate) use std::thread::sleep;
+pub(crate) use std::time::Duration;
+pub(crate) use std::net::{TcpStream, ToSocketAddrs};
+pub(crate) use url;
+
+use super::USE_LOCAL;
+#[derive(Debug)]
+pub struct HttpResponse {
+    status_line: String,
+    headers: HashMap<String, String>,
+    body: String,
+}
+impl HttpResponse {
+    pub fn status_line(&self) -> &str {
+        &self.status_line
+    }
+    pub fn headers(&self) -> &HashMap<String, String> {
+        &self.headers
+    }
+    pub fn body(&self) -> &str {
+        &self.body
+    }
+}
+pub(crate) fn http_request(url: &str, method: &str, include_body: bool, timeout: Option<Duration>) -> Result<HttpResponse, Box<dyn std::error::Error>> {
     // Parse the URL
     let url = url::Url::parse(url)?;
     let host = url.host_str().ok_or("Invalid host")?;
@@ -58,23 +79,30 @@ fn http_request(url: &str, method: &str, include_body: bool, timeout: Option<Dur
         body: if include_body { body } else { String::new() },
     })
 }
-
 // Wrapper functions for specific use cases
-fn http_get(url: &str) -> Result<String, Box<dyn std::error::Error>> {
-    let response = http_request(url, "GET", true, None/* :Option<Duration> */)?;
-    Ok(response.body)
-}
-
-fn http_get_head(url: &str) -> Result<String, Box<dyn std::error::Error>> {
-    let response = http_request(url, "HEAD", false, None)?;
+pub fn http_request_with_head(url: &str) -> Result<String, Box<dyn std::error::Error>> {
+    let response = http_request(url, "GET", false, None/* :Option<Duration> */)?;
     Ok(response.status_line)
 }
+pub(crate) fn http_get(url: &str) -> Result<HttpResponse, Box<dyn std::error::Error>> {
+    let response = http_request(url, "GET", true, None/* :Option<Duration> */)?;
+    Ok(response)
+}
 
-fn http_get_full(url: &str) -> Result<HttpResponse, Box<dyn std::error::Error>> {
+pub(crate) fn http_get_head(url: &str) -> Result<String, Box<dyn std::error::Error>> {
+    let response = http_request(url, "HEAD", false, None)?;
+    Ok(response.headers.get("Content-Length").unwrap().to_string())
+}
+
+pub(crate) fn http_get_full(url: &str) -> Result<HttpResponse, Box<dyn std::error::Error>> {
     http_request(url, "GET", true, None/* Option<Duration> */)
 }
 
-fn check_internet_connection() {
+pub(crate) fn check_internet_connection() {
+    if USE_LOCAL {
+        println!("Local mode enabled. Skipping internet connection check.");
+        return;
+    }
     print!("Checking internet connection... ");
     io::stdout().flush().unwrap();
 

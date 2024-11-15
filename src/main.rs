@@ -1,15 +1,56 @@
+// src/main.rs
+#![allow(unused_imports, dead_code)]
 mod helper;
 mod questions;
-use helper::{htr_low_level_http, apple_say_using, banner, ollama, quiz};
-use std::io::{self, Read, Write};
-use colored::*;
+
+use ollama_rs::generation::completion::GenerationResponse;
+use helper::{htr_low_level_http, apple_say_using, ollama, quiz};
+// use colored::*;
 use ollama_rs::generation::completion::request::GenerationRequest;
 use ollama_rs::generation::options::GenerationOptions;
 use ollama_rs::Ollama;
 use questions::{load_question_pool, TypedQuestion, QuestionType};
-// use quiz::{TypedQuestion};
-const USE_LOCAL: bool = true;
+use crate::questions::Question;
 
+// use quiz::{TypedQuestion};
+// no internet load from local questions.json
+#[cfg(not(feature = "use_local"))]
+pub const USE_LOCAL: bool = false;
+#[cfg(feature = "use_local")]
+pub const USE_LOCAL: bool = true;
+#[cfg(not(feature = "use_ki"))]
+pub const USE_KI: bool = false;
+#[cfg(feature = "use_ki")]
+pub const USE_KI: bool = true;
+fn test_ask_ollama() -> Result<GenerationResponse, Box<dyn std::error::Error>> {
+    if USE_KI {
+        let ollama_result = ollama::ask_ollama_model(
+            "mistral".to_string(), "Why is the sky blue?".to_string(), None, None, None, None, None, None);
+        Ok(ollama_result?)
+    }else{
+        Err("Not using KI".into())
+    }
+}
+#[allow(dead_code)]
+fn test_typed_question(){
+    let typed_question = TypedQuestion {
+        qtype: QuestionType::DuplicateQuestions,
+        question: questions::Question {
+            question: "What is the capital of France?".to_string(),
+            options: vec!["Paris".to_string(), "London".to_string(), "Berlin".to_string(), "Madrid".to_string()],
+            answer: "Paris".to_string(),
+            hint: Some("It's a city in France".to_string())
+        }
+    };
+    questions::ask_question(1, &typed_question);
+}
+
+#[allow(dead_code)]
+fn test_components(){
+    let _ = test_ask_ollama();
+    test_typed_question();
+}
+#[allow(dead_code)]
 #[tokio::main]
 async fn tokia_main() -> Result<(), Box<dyn std::error::Error>> {
     let ollama = Ollama::default();
@@ -38,11 +79,44 @@ async fn tokia_main() -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }
 
-
 fn main() {
-    htr_low_level_http::check_internet_connection(USE_LOCAL);
-    apple_say_using("欢迎来到黑客测验！", Some("Tingting"));
-    let question_pool = load_question_pool();
-    let num_questions = quiz::get_num_questions(); // in short the :: denominates the functional approach
-    // run_quiz(question_pool, num_questions);
+    // test_components();
+    // htr_low_level_http::check_internet_connection();
+    // apple_say_using("欢迎来到黑客测验！", Some("Tingting"));
+    // let question_pool = load_question_pool();
+    // let num_questions = quiz::get_num_questions(); // in short the :: denominates the functional approach
+    // let typed_questions = questions::check_for_duplicates(&question_pool);
+    if USE_KI {
+        //test_ask_ollama().expect("Error asking ollama");
+    }
+    let clip_question = questions::get_question_from_clipboard();
+    match clip_question {
+        Ok(question) => {
+            // check if we already have this question in the json
+            let found_question=  questions::get_filled_question(&question);
+            if found_question.is_ok(){
+                eprintln!("Question already in json");
+                dbg!(&found_question);
+                return;
+            }
+            // if Question is created from clipboard, we ask ollama about it
+            let ollama_question = questions::fill_question_from_ollama(question);
+            let mut i = 0;
+            match ollama_question{
+                Ok(question) => {
+                    // if ollama filled in the gaps in clip_question, we add the question to the json
+                    questions::add_question_to_json(question.clone()).expect("Error adding question to json");
+                    i += 1;
+                    questions::ask_question(i, &TypedQuestion { qtype: QuestionType::DefaultItem, question });
+                },
+                Err(e) => {
+                    eprintln!("Error getting question from ollama: {}", e);
+                }
+            }
+
+        },
+        Err(e) => {
+            eprintln!("Error getting question from clipboard: {}", e);
+        }
+    };
 }

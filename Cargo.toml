@@ -1,0 +1,25 @@
+[package]
+name = "CEH-mocktest"
+version = "0.1.0"
+edition = "2021"
+
+[features]
+use_local = []
+use_clipboard = []
+use_ki = []
+default = ["use_clipboard", "use_ki", "use_local"]
+
+
+[dependencies]
+rand = "0.9.0-alpha.2"
+colored = "2.1.0"
+reqwest = "0.12.9"
+serde_json = "1.0.132"
+url = "2.5.3"
+base64 = "0.22.1"
+#ollama-rs = { version= "0.1", path = "~/Documents/develeop/llm/ollama-rs" }
+ollama-rs = "0.2"
+serde = { version = "1.0", features = ["derive"] }
+tokio = { version = "1.41", features = ["rt", "rt-multi-thread", "macros"] }
+clipboard = "0.5"
+anyhow = "1.0.93"
