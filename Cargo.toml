@@ -1,26 +1,30 @@
 [package]
 name = "CEH-mocktest"
-version = "0.1.0"
+version = "0.5.0"
 edition = "2021"
 
 [features]
 use_local = []
+do_quiz = []
+use_sqlite = []
 use_clipboard = []
-use_ki = []
+use_db = ["rusqlite"]
+use_ki = ["ollama-rs", "tokio"]
 use_py = []
 default = ["use_local"]
 
 
 [dependencies]
 rand = "0.9.0-alpha.2"
-colored = "2.1.0"
-reqwest = "0.12.9"
-serde_json = "1.0.132"
-url = "2.5.3"
-base64 = "0.22.1"
-#ollama-rs = { version= "0.1", path = "~/Documents/develeop/llm/ollama-rs" }
-ollama-rs = "0.2"
-serde = { version = "1.0", features = ["derive"] }
-tokio = { version = "1.41", features = ["rt", "rt-multi-thread", "macros"] }
-clipboard = "0.5"
 anyhow = "1.0.93"
+base64 = "0.22.1"
+serde_json = "1.0.132"
+colored = "2.1.0"
+url = "2.5.3"
+serde = { version = "1.0", features = ["derive"] }
+tokio = { version = "1.41", features = ["rt", "rt-multi-thread", "macros"], optional = true }
+clipboard = "0.5"
+ollama-rs = { version= "0.2.1", path = "../../../../../../Users/htr/Documents/develeop/llm/ollama-rs", optional = true }
+#ollama-rs = "0.2"
+rusqlite = { version = "0.32.1", features = ["bundled"], optional = true }
+clap = "4.5.21"

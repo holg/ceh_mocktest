@@ -3,13 +3,11 @@
 mod helper;
 mod questions;
 
-use ollama_rs::generation::completion::GenerationResponse;
-use helper::{htr_low_level_http, apple_say_using, ollama, quiz};
-// use colored::*;
-use ollama_rs::generation::completion::request::GenerationRequest;
-use ollama_rs::generation::options::GenerationOptions;
-use ollama_rs::Ollama;
-use questions::{load_question_pool, TypedQuestion, QuestionType};
+#[cfg(feature = "use_ki")]
+use ollama_rs::{generation::{completion::GenerationResponse, completion::request::GenerationRequest, options::GenerationOptions}, Ollama};
+use crate::quiz::get_num_questions;
+use questions::{load_question_pool, check_for_duplicates, TypedQuestion, QuestionType};
+use helper::{htr_low_level_http, apple_say_using, ollama, quiz, banner, build_clap_app, AppConfig};
 use crate::questions::Question;
 
 // use quiz::{TypedQuestion};
@@ -30,8 +28,8 @@ fn test_typed_question(){
     let typed_question = TypedQuestion {
         qtype: QuestionType::DuplicateQuestions,
         question: questions::Question {
-            question: "What is the capital of France?".to_string(),
-            options: vec!["Paris".to_string(), "London".to_string(), "Berlin".to_string(), "Madrid".to_string()],
+            question: "What is the capital of Burkina Faso?".to_string(),
+            options: vec!["Paris".to_string(), "Ouagadougou".to_string(), "Berlin".to_string(), "Madrid".to_string()],
             answer: "Paris".to_string(),
             hint: Some("It's a city in France".to_string())
         }
@@ -42,7 +40,7 @@ fn test_typed_question(){
 #[allow(dead_code)]
 #[cfg(feature = "use_ki")]
 #[tokio::main]
-async fn tokia_main() -> Result<(), Box<dyn std::error::Error>> {
+async fn wuhan_main() -> Result<(), Box<dyn std::error::Error>> {
     let ollama = Ollama::default();
     let model = "llama2:latest".to_string();
     let prompt = "Why is the sky blue?".to_string();
@@ -74,9 +72,27 @@ fn main() {
     // test_components();
     // htr_low_level_http::check_internet_connection();
     // apple_say_using("欢迎来到黑客测验！", Some("Tingting"));
-    // let question_pool = load_question_pool();
     // let num_questions = quiz::get_num_questions(); // in short the :: denominates the functional approach
     // let typed_questions = questions::check_for_duplicates(&question_pool);
-    let result = questions::do_clipbboard_actions();
-    dbg!(&result);
+    let config = helper::get_app_config();
+
+    if let Err(e) = banner(config) {
+        eprintln!("Error displaying the banner: {}", e);
+    }
+    println!("{:?}", helper::banner(config));
+    #[cfg(feature = "use_clipboard")]{
+        let result = questions::do_clipbboard_actions();
+        #[cfg(feature = "use_clipboard")]
+        dbg!(&result);
+    }
+    #[cfg(feature = "use_sqlite")]{
+        let result = helper::json_to_sqlite();
+        #[cfg(feature = "use_sqlite")]
+        dbg!(&result);
+    }
+    #[cfg(not(feature = "use_clipboard"))]{
+        let question_pool = check_for_duplicates(&load_question_pool());
+        quiz::run_quiz(question_pool, get_num_questions());
+    }
+
 }

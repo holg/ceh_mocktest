@@ -1,10 +1,17 @@
 //helpers/mod.rs
 use std::process::Command;
-
+use colored::*;
 pub mod htr_low_level_http;
 pub mod ollama;
 pub mod quiz;
 mod ceh_lab;
+mod json_to_sqlite;
+mod feature_manager;
+pub use feature_manager::{AppConfig, build_clap_app, get_app_config};
+
+#[cfg(feature = "use_sqlite")]
+pub use json_to_sqlite::json_to_sqlite;
+use crate::helper;
 
 #[cfg(not(feature = "use_local"))]
 pub const USE_LOCAL: bool = false;
@@ -15,6 +22,20 @@ pub const USE_KI: bool = false;
 #[cfg(feature = "use_ki")]
 pub const USE_KI: bool = true;
 
+pub fn get_features_description() -> anyhow::Result<Vec<ColoredString>> {
+    let features = vec![
+        "use_local".green(),
+        "do_quiz".blue(),
+        "use_ki".cyan(),
+        "use_clipboard".red(),
+        "use_py".italic(),
+        "use_db".bright_green(),
+        "use_sqlite".yellow()
+    ];
+    Ok(features)
+
+}
+
 
 #[allow(dead_code)]
 pub fn apple_say_using(text: &str, voice_using: Option<&str>) {
@@ -23,23 +44,6 @@ pub fn apple_say_using(text: &str, voice_using: Option<&str>) {
     if let Err(e) = Command::new("sh").arg("-c").arg(&script).status() {
         eprintln!("Failed to execute osascript: {}", e);
     }
-}
-
-pub fn banner() {
-    let art = r#"
-    _____ ______ _    _      __  __            _      _______        _
-  / ____|  ____| |  | |    |  \/  |          | |    |__   __|      | |
- | |    | |__  | |__| |    | \  / | ___   ___| | __    | | ___  ___| |_
- | |    |  __| |  __  |    | |\/| |/ _ \ / __| |/ /    | |/ _ \/ __| __|
- | |____| |____| |  | |    | |  | | (_) | (__|   <     | |  __/\__ \ |_
-  \_____|______|_|  |_|    |_|  |_|\___/ \___|_|\_\    |_|\___||___/\__|
-                                                                   v1.5
-    Quiz by @TS'htr_'hsuCryptographic
-
- For Certified Ethical Hacker v12                    Last Updated April 2024
-----------------------------------------------------------------------------
-    "#;
-    println!("{}", art);
 }
 
 /// Returns true if the "use_local" feature is enabled, otherwise false.
@@ -61,8 +65,18 @@ pub fn is_use_py() -> bool {
     cfg!(feature = "use_py")
 }
 
+/// Returns true if the "use_db" feature is enabled, otherwise false.
+pub fn is_use_db() -> bool {
+    cfg!(feature = "use_db")
+}
+
+/// Returns true if the "use_sqlite" feature is enabled, otherwise false.
+pub fn is_use_sqlite() -> bool {
+    cfg!(feature = "use_sqlite")
+}
+
 /// Returns true if the "use_py" feature is enabled, otherwise false.
-pub fn debug_default_level() -> u32 {
+pub fn debug_default_level() -> i8 {
     10
 }
 

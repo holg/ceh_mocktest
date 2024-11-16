@@ -150,7 +150,7 @@ pub fn ask_question(question_number: usize, typed_question: &TypedQuestion) -> b
 
     sleep(Duration::from_micros(300));
     print!("{esc}[2J{esc}[1;1H", esc = 27 as char); // Clear screen
-    banner();
+    let _ = banner().expect("Banner failed to print");
     println!("Question {}\n\n{}", question_number, question.question);
     for (i, option) in options.iter().enumerate() {
         println!("{}. {}", i + 1, option.cyan());
@@ -222,10 +222,69 @@ pub fn get_question_from_clipboard() -> anyhow::Result<Question> {
 pub fn get_question_from_clipboard() -> anyhow::Result<Question> {Ok(Question::new())}
 
 
+/// Fills in the details of a Question using the Ollama language model.
+///
+/// This function is only available when the "use_ki" feature is enabled.
+///
+/// # Feature
+///
+/// This function requires the `use_ki` feature to be enabled.
+///
+/// ```toml
+/// [features]
+/// use_ki = []
+/// ```
+///
+/// # Parameters
+///
+/// * `question` - A mutable Question struct that contains at least the question text
+///                and options. The answer and hint fields will be filled by this function.
+///
+/// # Returns
+///
+/// * `anyhow::Result<Question>` - A Result containing either:
+///   - `Ok(Question)`: The input Question struct with the answer and hint fields filled.
+///   - `Err(anyhow::Error)`: An error if there's a problem with the Ollama model
+///     interaction or JSON parsing.
+///
+/// # Errors
+///
+/// This function may return an error if:
+/// - There's an issue communicating with the Ollama model.
+/// - The response from Ollama cannot be parsed as valid JSON.
+/// - Any other unexpected errors occur during processing.
+///
+/// # Examples
+///
+/// ```rust,no_run
+/// # #[cfg(feature = "use_ki")]
+/// # use your_crate::{Question, fill_question_from_ollama};
+/// #
+/// # #[cfg(feature = "use_ki")]
+/// # fn main() -> anyhow::Result<()> {
+/// #     let mut question = Question::new(); // Assume this is implemented
+/// #     question.question = "What is the capital of France?".to_string();
+/// #     question.options = vec![
+/// #         "London".to_string(),
+/// #         "Paris".to_string(),
+/// #         "Berlin".to_string(),
+/// #         "Madrid".to_string(),
+/// #     ];
+/// #
+/// #     let filled_question = fill_question_from_ollama(question)?;
+/// #     println!("Answer: {}", filled_question.answer);
+/// #     println!("Hint: {:?}", filled_question.hint);
+/// #     Ok(())
+/// # }
+/// #
+/// # #[cfg(not(feature = "use_ki"))]
+/// # fn main() {}
+/// ```
 #[cfg(feature = "use_ki")]
-pub fn fill_question_from_ollama(mut question: Question) -> anyhow::Result<Question> {
-    // Retrieve text content from clipboard
-    dbg!(&question);
+pub fn fill_question_from_ollama(mut question: Question) -> anyhow::Result<Question>{
+    if helper::debug_default_level() > 10 {
+        dbg!(&question);
+    }
     let mut question_text = "answer in correct JSON Format (so no comments) only two fields \"option_number  exact (1-4)\": int Number of the option\n\"hint\": some single line hint\n\n} Question:\n\n".to_string();
     question_text += &question.question;
     question_text += "\nOptions:\n";
@@ -356,13 +415,6 @@ pub fn create_question_from_text(text: &str) -> anyhow::Result<Question> {
         options,
     })
 }
-
-
-
-
-
-// TODO refactor
-
 pub fn do_clipbboard_actions() -> anyhow::Result<Question> {
     let clipboard_question = match get_clipboard_question() {
         Ok(question) => question,
@@ -403,12 +455,12 @@ fn do_clipboard_question(clip_question:Question) -> anyhow::Result<Question> {
     }
 }
 
-fn check_question_exists(question: &Question) -> Option<Question> {
-    let questions = load_question_pool();
-    questions.into_iter().find(|q| q.question == question.question)
-}
-
 #[cfg(not(feature = "use_ki"))]
 fn do_clipboard_question(clip_question:Question) -> anyhow::Result<Question> {
     Ok(clip_question)
+}
+
+fn check_question_exists(question: &Question) -> Option<Question> {
+    let questions = load_question_pool();
+    questions.into_iter().find(|q| q.question == question.question)
 }
