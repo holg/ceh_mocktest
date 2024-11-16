@@ -50,11 +50,11 @@ jobs:
           sudo apt-get install -y libxcb-shape0-dev libxcb-xfixes0-dev
 
       - name: Build Binary
-        run: cargo build --verbose --release --target ${{ matrix.target }}
+        run: cargo build --features "use_local" --verbose --release --target ${{ matrix.target }}
 
       - name: Run Tests
         if: "!matrix.cross"  # Skip tests for cross-compilation
-        run: cargo test --verbose --release --target ${{ matrix.target }}
+        run: cargo test --features "use_local" --verbose --release --target ${{ matrix.target }}
 
       - name: Prepare Binary
         if: matrix.os == 'windows-latest'
