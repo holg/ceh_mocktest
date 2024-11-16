@@ -6,16 +6,12 @@ use crate::questions::TypedQuestion;
 use std::io::{self, Write};
 use rand::prelude::{IndexedRandom};
 use super::{banner, quiz}; // The mod.rs is the best explanation for super IMHO
-#[cfg(not(feature = "use_ki"))]
-pub const USE_KI: bool = false;
-#[cfg(feature = "use_ki")]
-use super::ollama;pub const USE_KI: bool = true;
-// Import the USE_LOCAL constant from main module
-use super::USE_LOCAL;
-pub fn quiz_use_local() -> bool {USE_LOCAL}
-pub fn get_num_questions() -> Option<usize> {
+pub fn cls() {
     print!("{esc}[2J{esc}[1;1H", esc = 27 as char); // Clear screen
-    banner();
+}
+pub fn get_num_questions() -> Option<usize> {
+    cls();
+    let _ = banner().expect("Failed to print banner");
     loop {
         print!("Do you want to set a custom number of questions? [Default: 125] (yes/no): ");
         io::stdout().flush().unwrap();
@@ -35,6 +31,8 @@ pub fn get_num_questions() -> Option<usize> {
                 }
             }
             "no" => return None,
+            "cls" => cls(),
+            "banner" => banner().expect("Failed to print banner"),
             _ => return None,
         }
     }

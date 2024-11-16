@@ -1,19 +1,22 @@
 //helper/ollama.rs
-// Import the USE_LOCAL constant from main module
 #![allow(unused_imports, dead_code)]
-
 use anyhow::Result;
 use serde_json;
 use serde_json::json;
+#[cfg(feature = "tokio")]
 use tokio; // Make sure to add `tokio` in your dependencies in Cargo.toml
-use ollama_rs::generation::completion::GenerationResponse;
-pub use ollama_rs::{
-    generation::{completion::request::GenerationRequest, options::GenerationOptions},
-    Ollama,
-};
-use super::{USE_LOCAL, USE_KI};
+#[cfg(feature = "use_ki")]
+mod use_ki {
+    use ollama_rs;
+    pub use ollama_rs::generation::completion::GenerationResponse;
+    pub use ollama_rs::{
+        generation::{completion::request::GenerationRequest, options::GenerationOptions},
+        Ollama,
+    };
+}
 
-
+#[cfg(feature = "use_ki")]
+use use_ki::*;
 pub fn ollama_get_options_str_from_param(
     temperature: Option<f32>,
     repeat_penalty: Option<f32>,top_k: Option<u32>, top_p: Option<f32>,
@@ -36,13 +39,15 @@ pub fn ollama_get_options_str_from_param(
 }
 
 // Synchronous version of the function
+
+#[cfg(feature = "use_ki")]
 pub fn ask_ollama_model(
     model: String,
     prompt: String,
     temperature: Option<f32>,
     repeat_penalty: Option<f32>,top_k: Option<u32>, top_p: Option<f32>,
     num_predict: Option<u32>, stop: Option<&str>
-) -> Result<GenerationResponse, anyhow::Error> {
+) -> anyhow::Result<GenerationResponse> {
     let ollama = Ollama::default();
     let options: GenerationOptions =
         serde_json::from_str(&ollama_get_options_str_from_param(
@@ -60,10 +65,7 @@ pub fn ask_ollama_model(
     }
 }
 
-pub fn test_local() -> bool {
-    USE_LOCAL
-}
-
+#[cfg(feature = "use_ki")]
 pub async fn test_tokio_ollama_model(
     model: String,
     prompt: String,
@@ -87,6 +89,7 @@ mod tests {
     use super::*;
 
     #[tokio::test]
+    #[cfg(feature = "use_ki")]
     async fn test_ollama_model_success() {
         // Fill in with valid example data
         let model = String::from("mistral:latest");
@@ -98,16 +101,12 @@ mod tests {
     }
 
     #[test]
+    #[cfg(feature = "use_ki")]
     fn test_quiz_ollama_model_success() {
         // Fill in with valid example data
         let model = String::from("mistral");
         let prompt = String::from("Some prompt text");
-        let options_str = String::from("{}"); // Assuming an empty JSON object for options
         let result = ask_ollama_model(model, prompt,None, None, None, None, None, None);
-        assert!(result.is_ok());
-    }
-    #[test]
-    fn test_ask_question() {
-        assert_eq!(test_local(), USE_LOCAL);
+    assert!(result.is_ok());
     }
 }
