@@ -1,4 +1,4 @@
-name: Rust
+name: Rust Multi-Platform Build
 
 on:
   push:
@@ -8,42 +8,90 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
+  BINARY_NAME: your_binary_name    # Replace with your binary name
 
 jobs:
-  build-linux:
+  build:
+    name: Build ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            artifact_name: linux-x86_64
+            cross: false
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+            artifact_name: windows-x86_64.exe
+            cross: false
+          - os: macos-latest
+            target: x86_64-apple-darwin
+            artifact_name: macos-x86_64
+            cross: false
+          - os: macos-latest
+            target: aarch64-apple-darwin
+            artifact_name: macos-aarch64
+            cross: true
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - name: Install Dependencies (Linux)
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libxcb-shape0-dev libxcb-xfixes0-dev
+
+      - name: Build Binary
+        run: cargo build --verbose --release --target ${{ matrix.target }}
+
+      - name: Run Tests
+        if: "!matrix.cross"  # Skip tests for cross-compilation
+        run: cargo test --verbose --release --target ${{ matrix.target }}
+
+      - name: Prepare Binary
+        if: matrix.os == 'windows-latest'
+        run: |
+          cd target/${{ matrix.target }}/release
+          7z a ../../../${{ env.BINARY_NAME }}-${{ matrix.artifact_name }}.zip ${{ env.BINARY_NAME }}.exe
+        shell: bash
+
+      - name: Prepare Binary
+        if: matrix.os != 'windows-latest'
+        run: |
+          cd target/${{ matrix.target }}/release
+          tar czf ../../../${{ env.BINARY_NAME }}-${{ matrix.artifact_name }}.tar.gz ${{ env.BINARY_NAME }}
+        shell: bash
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.BINARY_NAME }}-${{ matrix.artifact_name }}
+          path: |
+            ${{ env.BINARY_NAME }}-${{ matrix.artifact_name }}.tar.gz
+            ${{ env.BINARY_NAME }}-${{ matrix.artifact_name }}.zip
+          if-no-files-found: error
+
+  # Optional: Create a release when tagged
+  create-release:
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: build
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: Install Rust
-      run: rustup default stable
-    - name: Install Dependencies
-      run: sudo apt-get update && sudo apt-get install -y libxcb-shape0-dev libxcb-xfixes0-dev
-    - name: Build
-      run: cargo build --release
-    - name: Run tests
-      run: cargo test --release --features "test"
+      - uses: actions/download-artifact@v3
 
-  build-windows:
-    runs-on: windows-latest
-    steps:
-    - uses: actions/checkout@v4
-    - name: Install Rust
-      run: rustup default stable
-    - name: Build
-      run: cargo build --release
-    - name: Run tests
-      run: cargo test --release
-
-  build-macos:
-    runs-on: macos-latest
-    strategy:
-      matrix:
-        arch: [x86_64-apple-darwin, aarch64-apple-darwin]
-    steps:
-    - uses: actions/checkout@v4
-    - name: Install Rust
-      run: rustup default stable
-    - name: Build
-      run: cargo build --release --target ${{ matrix.arch }}
-    - name: Run tests
-      run: cargo test --release --target ${{ matrix.arch }}
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            */*.tar.gz
+            */*.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
