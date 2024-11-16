@@ -826,6 +826,8 @@ dependencies = [
 [[package]]
 name = "ollama-rs"
 version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "46483ac9e1f9e93da045b5875837ca3c9cf014fd6ab89b4d9736580ddefc4759"
 dependencies = [
  "async-stream",
  "async-trait",

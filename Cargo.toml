@@ -24,7 +24,7 @@ url = "2.5.3"
 serde = { version = "1.0", features = ["derive"] }
 tokio = { version = "1.41", features = ["rt", "rt-multi-thread", "macros"], optional = true }
 clipboard = "0.5"
-ollama-rs = { version= "0.2.1", path = "../../../../../../Users/htr/Documents/develeop/llm/ollama-rs", optional = true }
+ollama-rs = { version= "0.2.1", optional = true }
 #ollama-rs = "0.2"
 rusqlite = { version = "0.32.1", features = ["bundled"], optional = true }
 clap = "4.5.21"
